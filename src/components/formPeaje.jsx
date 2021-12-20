@@ -1,6 +1,20 @@
 import React from "react";
 import cate from "../images/categorias.png";
+import {post} from "../api/http";
+
 export function FormPeaje(){
+
+    const crearPeaje = (event) =>{
+        event.preventDefault();
+        const newPeaje = {
+            nombre: document.getElementById("txtnombre").value,
+            latitud: document.getElementById("txtlat").value,
+            longitud: document.getElementById("txtlon").value
+        }
+        post("peaje", newPeaje);
+        alert("Peaje creado con Éxito");
+    }
+
     return (
         <div className="container">
             <div className="row">
@@ -24,7 +38,7 @@ export function FormPeaje(){
                 <img className="w-75" src={cate} alt="" />
             </div>
             <div className="row d-flex flex-wrap justify-content-center mb-5">
-                <button className="btn btn-success col-4">Crear</button>
+                <button className="btn btn-success col-4" type="button" onClick={crearPeaje}>Crear</button>
             </div>
         </div>
     );

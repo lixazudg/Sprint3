@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import {post} from "../api/http";
 
 export function FormRegistro(tit){
     
@@ -6,6 +7,20 @@ export function FormRegistro(tit){
     if(tit.tit.tit==="adm") titulo="Registro de Usuario Administrador";
     else if(tit.tit.tit==="interno") titulo="Registro de Usuario Interno";
     else if(tit.tit.tit==="externo") titulo="Registro de Usuario Externo";
+
+    const crearUsuario = (event) =>{
+        event.preventDefault();
+        const data = new FormData(event.target);
+        const newUser = {
+            nombre: data.get("txtnombre"),
+            ident: data.get("txtcedula"),
+            correo: data.get("txtcorreo"),
+            usuario: data.get("txtusuario"),
+            password: data.get("txtpassword")
+        }
+        post("usuario", newUser);
+        alert("Usuario Creado con éxito");
+    }
 
     return (
         <Fragment>
@@ -17,31 +32,31 @@ export function FormRegistro(tit){
                     </div>
 
                     <div className="modal-body p-5 pt-0">
-                        <form className="" onSubmit="" action="#">
+                        <form className="" onSubmit={crearUsuario}>
                         <div className="form-floating mb-3">
-                            <input type="text" className="form-control rounded-4" id="txtnombre" required/>
+                            <input type="text" className="form-control rounded-4" name="txtnombre" id="txtnombre" required/>
                             <label htmlFor="txtnombre">Nombre Completo</label>
                         </div>
                     
                         <div className="form-floating mb-3">
-                            <input type="number" className="form-control rounded-4" id="txtcedula" required/>
+                            <input type="number" className="form-control rounded-4" name="txtcedula" id="txtcedula" required/>
                             <label htmlFor="txtcedula">Número de identificación</label>
                         </div>
                         
                         <div className="form-floating mb-3">
-                            <input type="email" className="form-control rounded-4" id="txtcorreo"  required/>
+                            <input type="email" className="form-control rounded-4" name="txtcorreo" id="txtcorreo"  required/>
                             <label htmlFor="txtcorreo">Correo electrónico</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input type="text" className="form-control rounded-4" id="txtusuario" required/>
+                            <input type="text" className="form-control rounded-4" name="txtusuario" id="txtusuario" required/>
                             <label htmlFor="txtusuario">Nombre de Usuario</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input type="password" className="form-control rounded-4" id="txtpassword"  required/>
+                            <input type="password" className="form-control rounded-4" name="txtpassword" id="txtpassword"  required/>
                             <label htmlFor="txtpassword">Contraseña</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input type="password" className="form-control rounded-4" id="txtconfirmar"  required/>
+                            <input type="password" className="form-control rounded-4" name="txtconfirmar" id="txtconfirmar"  required/>
                             <label htmlFor="txtconfirmar">Confirmar Contraseña</label>
                         </div>
                         <button className="w-100 mb-2 btn btn-lg rounded-4 btn-primary btn-dark" type="submit">Registrar</button>

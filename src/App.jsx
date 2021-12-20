@@ -6,6 +6,7 @@ import { Pagos } from './vistas/Pagos';
 import { CrearConsorcio } from './vistas/CrearConsorcio';
 import { CrearPeaje } from './vistas/CrearPeaje';
 import { GenerarReporte } from './vistas/GenerarReporte';
+import { Recarga } from './vistas/Recarga';
 
 function App() {
   if (window.location.pathname==="/") return <Home />
@@ -19,6 +20,7 @@ function App() {
   else if (window.location.pathname==="/interno/consorcio") return <CrearConsorcio />
   else if (window.location.pathname==="/interno/peaje") return <CrearPeaje />
   else if (window.location.pathname==="/interno/reporte") return <GenerarReporte />
+  else if (window.location.pathname==="/interno/recargar") return <Recarga />
   else return <Home />
 }
 

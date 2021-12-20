@@ -12,7 +12,7 @@ export function Header (){
 
             <ul className="nav col-8 col-md-auto mb-2 justify-content-center mb-md-0 items-lg">
                 <li><a href="/" className="nav-link px-2 link-dark">Inicio</a></li>
-                <li><a href="/usuarios" className="nav-link px-2 link-dark">Usuarios</a></li>
+                <li><a class="nav-link px-2 link-dark" href="/#menuUsuarios" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Usuarios</a></li>
                 <li><a href="/precios" className="nav-link px-2 link-dark">Precios</a></li>
                 <li><a href="/categorias" className="nav-link px-2 link-dark">Categorías</a></li>
                 <li><a href="/contacto" className="nav-link px-2 link-dark">Contacto</a></li>

@@ -7,12 +7,12 @@ export function ContenidoReporte(){
         <div className="container">
             <div className="row h-5">
                 <div className="col-5">
-                    <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Recaudado por rango de fechas" readOnly />
+                    <input className="m-0 mb-2 alert-secondary text-center text-black fw-bold w-100" type="text" value="Recaudado por rango de fechas" readOnly />
                 </div>
                 <div className="col">
-                    <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Nombre peaje" readOnly />
-                    <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Fecha Inicial" readOnly />
-                    <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Fecha Final" readOnly />
+                    <input className="m-0 mb-2 alert-secondary text-center text-black fw-bold" type="text" value="Nombre peaje" readOnly />
+                    <input className="m-0 mb-2 alert-secondary text-center text-black fw-bold" type="text" value="Fecha Inicial" readOnly />
+                    <input className="m-0 mb-2 alert-secondary text-center text-black fw-bold" type="text" value="Fecha Final" readOnly />
                 </div>
                 <div className="col">
                     <input className="m-0 mb-2 w-100 text-center text-black shadow" type="text" />

@@ -20,7 +20,7 @@ export function ContenidoHome(){
             <div className="row align-items-md-stretch">
             <div className="col-md-4">
                 <div className="h-100 p-5 bg-transparent border rounded-3">
-                <img className="w-100" src={freepass} alt=""/>
+                <a href="/freepass"><img className="w-100" src={freepass} alt=""/></a>
                 <h2 className="text-center">Free-Pass</h2>
                 <p>
                     El peaje free-pass permite gestionar el cobro electrónico sin interferir 
@@ -32,7 +32,7 @@ export function ContenidoHome(){
             </div>
             <div className="col-md-4">
                 <div className="h-100 p-5 bg-transparent border rounded-3">
-                <img className="w-100" src={cash} alt=""/>
+                <a href="/cash"><img className="w-100" src={cash} alt=""/></a>
                 <h2 className="text-center">Pago Manual</h2>
                 <p>
                     En este modelo el usuario de la autopista paga por su utilización en las
@@ -42,7 +42,7 @@ export function ContenidoHome(){
             </div>
             <div className="col-md-4">
                 <div className="h-100 p-5 bg-transparent border rounded-3">
-                <img className="w-80" src={cashcard} alt=""/>
+                <a href="/cashcard"><img className="w-100" src={cashcard} alt=""/></a>
                 <h2 className="text-center">Peaje Free-Flow</h2>
                 <p>
                     Permite el pago del peaje, combinando la forma de pago por ventanilla
@@ -50,6 +50,36 @@ export function ContenidoHome(){
                 </p>
                 </div>
             </div>
+            </div>
+            <div className="pt-3 mt-4 row text-center border" id="menuUsuarios">
+                <h3 className="text-black">Registro de Usuarios</h3>
+                <div className="col">
+                    <a className="h3" href="/registro">Externos</a>
+                </div>
+                <div className="col">
+                    <a className="h3" href="/#optInternos">Internos</a>
+                </div>
+                <div className="col">
+                    <a className="h3" href="/registro/adm">Administradores</a>
+                </div>
+            </div>
+            <div className="pt-3 mt-4 row text-center border" id="optInternos">
+            <h3 className="text-black">Opciones para usuario interno</h3>
+                <div className="col">
+                    <a className="h4" href="/registro/internos">Registro</a>
+                </div>
+                <div className="col">
+                    <a className="h4" href="/interno/peaje">Crear Peaje</a>
+                </div>
+                <div className="col">
+                    <a className="h4" href="/interno/consorcio">Crear consorcio</a>
+                </div>
+                <div className="col">
+                    <a className="h4" href="/interno/recargar">Recargar TAG</a>
+                </div>
+                <div className="col">
+                    <a className="h4" href="/interno/reporte">Generar Reporte</a>
+                </div>
             </div>
 
             <footer className="pt-3 mt-4 text-muted border-top">
