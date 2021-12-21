@@ -1,8 +1,18 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import imprimir from "../images/print.png"
 import salir from "../images/salir.png"
+import {get} from "../api/http";
 
 export function ContenidoReporte(){
+    const [peajes, setPeajes]=useState([]);
+
+    useEffect(()=>{
+        console.log("Leyendo peajes desde la api");
+        get("peajes").then(data=>{
+            setPeajes(data.peajes);
+        })
+    },[])
+
     return(
         <div className="container">
             <div className="row h-5">
@@ -15,7 +25,12 @@ export function ContenidoReporte(){
                     <input className="m-0 mb-2 alert-secondary text-center text-black fw-bold" type="text" value="Fecha Final" readOnly />
                 </div>
                 <div className="col">
-                    <input className="m-0 mb-2 w-100 text-center text-black shadow" type="text" />
+                    <select className="m-0 mb-2 text-center text-black shadow w-100" name="selpeaje" id="selpeaje">
+                        <option value="">Seleccione un peaje</option>
+                        {peajes.map(peaje=>
+                            <option value={peaje.nombre}>{peaje.nombre}</option>
+                        )}
+                    </select>
                     <input className="m-0 mb-2 w-100 text-center text-black shadow" type="date" />
                     <input className="m-0 mb-2 w-100 text-center text-black shadow" type="date" />
                     <button className="btn btn-success">Generar</button>
@@ -25,30 +40,16 @@ export function ContenidoReporte(){
                 <div className="col-9 d-flex flex-wrap">
                     <table className="table table-success">
                         <thead>
-                            <th scope="col">Nombre Peaje</th>
-                            <th scope="col">Fecha Inicial</th>
-                            <th scope="col">Fecha Final</th>
-                            <th scope="col">Total Recaudo</th>
+                            <th scope="col bg-light text-center">Nombre Peaje</th>
+                            <th scope="col bg-light text-center">Total Recaudo</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Lorica</td>
-                                <td>20/11/2021</td>
-                                <td>20/12/2021</td>
-                                <td>3000000</td>
-                            </tr>
-                            <tr>
-                                <td>Cartagena</td>
-                                <td>20/11/2021</td>
-                                <td>20/12/2021</td>
-                                <td>4000000</td>
-                            </tr>
-                            <tr>
-                                <td>Puerto Colombia</td>
-                                <td>20/11/2021</td>
-                                <td>20/12/2021</td>
-                                <td>7000000</td>
-                            </tr>
+                            {peajes.map(peaje=>
+                                <tr className="text-center">
+                                    <td>{peaje.nombre}</td>
+                                    <td>{peaje.recaudo}</td>
+                                </tr>
+                                )}
                         </tbody>
                     </table>
                 </div>

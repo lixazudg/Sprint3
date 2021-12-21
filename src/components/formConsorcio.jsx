@@ -9,7 +9,7 @@ export function FormConsorcio(){
             nombre: data.get("txtconsorcio"),
             descripcion: data.get("txtdescripcion")
         }
-        post("consorcio", newConsor);
+        post("consorcios", newConsor);
         alert("Consorcio Creado con éxito");
     }
     return(
@@ -24,7 +24,7 @@ export function FormConsorcio(){
                             <form className="" onSubmit={crearConsorcio} name="formCrearConsorcio">
                             
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control rounded-4" name="txtconsocio" id="txtconsocio" required/>
+                                <input type="text" className="form-control rounded-4" name="txtconsorcio" id="txtconsorcio" required/>
                                 <label htmlFor="txtconsorcio">Nombre Consorcio</label>
                             </div>
                             <div className="form-floating mb-3">

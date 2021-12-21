@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import imagen from "../images/costa-peaje.png";
-import {get} from "../api/http";
 
 export function Header2 (){
-    const [peajes, setPeajes]=useState([]);
-    
-    useEffect(()=>{
-        console.log("Leyendo peajes desde la api");
-        get("peajes").then(data=>{
-            setPeajes(data.peajes);
-        })
-    },[])
-
+    const date = new Date();
+    const fecha = date.toDateString();
+    const hora = date.getHours()+":"+date.getMinutes();
     return(
         <div className="container">
             <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -29,9 +22,8 @@ export function Header2 (){
                 </div>
             </div>
             <div className="col-md-3 text-center">
-                <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value={peajes.map(peaje=>peaje.nombre)} readOnly />
-                <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Fecha: 25/11/2021" readOnly />
-                <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Hora: 10:30 pm" readOnly />
+                <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value={fecha} readOnly />
+                <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value={hora} readOnly />
             </div>
             <div className="w-100 d-flex flex-wrap row-md-3 justify-content-center">
                 <input className="m-2 bg-secondary text-center text-white fw-bold" type="text" value="Cajero: 63" readOnly />

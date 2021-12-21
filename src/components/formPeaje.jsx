@@ -8,10 +8,11 @@ export function FormPeaje(){
         event.preventDefault();
         const newPeaje = {
             nombre: document.getElementById("txtnombre").value,
-            latitud: document.getElementById("txtlat").value,
-            longitud: document.getElementById("txtlon").value
+            latitud: parseFloat(document.getElementById("txtlat").value),
+            longitud:parseFloat(document.getElementById("txtlon").value),
+            recaudo: 0
         }
-        post("peaje", newPeaje);
+        post("peajes", newPeaje);
         alert("Peaje creado con Éxito");
     }
 

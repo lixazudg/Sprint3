@@ -18,7 +18,7 @@ export function FormRegistro(tit){
             usuario: data.get("txtusuario"),
             password: data.get("txtpassword")
         }
-        post("usuario", newUser);
+        post("usuarios", newUser);
         alert("Usuario Creado con éxito");
     }
 

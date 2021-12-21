@@ -1,5 +1,4 @@
-import React from "react";
-import { Fragment } from "react/cjs/react.production.min";
+import React, {Fragment, useState, useEffect} from "react";
 import corsa from "../images/corsablanco.png";
 import foto from "../images/fotovehiculo.png";
 import freepass from "../images/FREE-PASS.PNG";
@@ -7,12 +6,37 @@ import imprimir from "../images/print.png";
 import salir from "../images/salir.png";
 import cash from "../images/CASH.PNG";
 import cashcard from "../images/CASH-CARD.PNG";
-import {post, get} from "../api/http";
+import {post, get, patch, borrar} from "../api/http";
 
 export function ContenidoPagos(){
     let titulo;
     let imagen;
     let contenido;
+    const [peajes, setPeajes]=useState([]);
+    const [doChange, setDoChange]=useState(false);
+    const [pagos, setPagos]=useState([]);
+
+    useEffect(()=>{
+        get("peajes").then(data=>{
+            setPeajes(data.peajes);
+        })
+        get("pagos").then(data=>{
+            setPagos(data.pagos);
+        })
+    },[]);
+
+    useEffect(()=>{
+        if(doChange){
+            get("peajes").then(data=>{
+                setPeajes(data.peajes);
+            })
+            get("pagos").then(data=>{
+                setPagos(data.pagos);
+            })
+            setDoChange(false);
+        }
+    },[doChange]);
+
     if(window.location.pathname==="/freepass"){
         titulo="Pago electrónico Free-Pass";
         imagen=freepass;
@@ -75,12 +99,21 @@ export function ContenidoPagos(){
         event.preventDefault();
         const newpago={
             placa: document.getElementById("placa").value,
-            peaje: document.getElementById("peaje").value,
+            peaje: document.getElementById("selpeaje").value,
             tipo: "efectivo",
-            pago: parseInt(document.getElementById("tarifa").value)
+            tarifa: parseInt(document.getElementById("tarifa").value)
         }
         post("pagos", newpago);
         alert("Pago realizado con éxito");
+        const prevRecaudo=parseInt(peajes.filter(peaje=>peaje.nombre===document.getElementById("selpeaje").value).map(peaje=>peaje.recaudo));
+        const newrec=prevRecaudo+parseInt(document.getElementById("tarifa").value);
+        const modRecaudo={
+            nombre: document.getElementById("selpeaje").value,
+            recaudo: newrec
+        }
+        patch("peajes", modRecaudo);
+        console.log(`Recaudo en el peaje ${document.getElementById("selpeaje").value} con éxito`);
+        setDoChange(true);
     }
 
     const ajustarTarifa =(event) =>{
@@ -107,6 +140,25 @@ export function ContenidoPagos(){
         }
     }
 
+    const eliminarPago = (event) =>{
+        event.preventDefault();
+        const id_pago=document.getElementById("selpago").value;
+        const pagoAEliminar=pagos.filter(p=>p._id===id_pago).map(p=>p.peaje);
+        const prevRecaudo=parseInt(peajes.filter(pe=>pe.nombre===pagoAEliminar[0]).map(p=>p.recaudo));
+        
+        const newrec=prevRecaudo-parseInt(pagos.filter(p=>p._id===id_pago).map(p=>p.tarifa)[0]);
+        
+        const modRecaudo={
+            nombre: pagoAEliminar[0],
+            recaudo: newrec
+        }
+        console.log(modRecaudo);
+        patch("peajes", modRecaudo);
+        borrar("pagos",{id:id_pago});
+        alert("Pago eliminado con éxito");
+        setDoChange(true);
+    }
+
     return(
         <div className="container">
             <div className="row">
@@ -114,12 +166,19 @@ export function ContenidoPagos(){
                     <img className="w-100" src={corsa} alt="" />
                 </div>
                 <div className="col text-center">
+                    <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Peaje" readOnly />
                     <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Categoria" readOnly />
                     <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Ejes" readOnly />
                     <input className="m-0 mb-2 bg-secondary text-center text-white fw-bold" type="text" value="Placa" readOnly />
                 </div>
                 <div className="col">
-                    <select onChange={ajustarTarifa} name="selCategoria" id="selCategoria" className="m-0 mb-2 text-center text-black shadow">
+                    <select className="m-0 mb-2 text-center text-black shadow w-100" name="selpeaje" id="selpeaje">
+                        <option value="">Seleccione un peaje</option>
+                        {peajes.map(peaje=>
+                            <option value={peaje.nombre}>{peaje.nombre}</option>
+                        )}
+                    </select>
+                    <select className="m-0 mb-2 text-center text-black shadow w-100" onChange={ajustarTarifa} name="selCategoria" id="selCategoria">
                         <option value="1">CAT 1</option>
                         <option value="2">CAT 2</option>
                         <option value="3">CAT 3</option>
@@ -139,7 +198,17 @@ export function ContenidoPagos(){
                 <div className="col-2">
                  <img className="w-100" src={imagen} alt="" />
                 </div>
+                
                 {contenido}
+                <div className="col-6">
+                    <select className="m-4 mb-2 text-center text-black shadow" name="selpago" id="selpago">
+                        <option value="">Seleccione un pago</option>
+                        {pagos.map(pago=>
+                            <option value={pago._id}>{pago.placa} - {pago.peaje}</option>
+                        )}
+                    </select>
+                    <button className="btn btn-danger" onClick={eliminarPago}>Eliminar pago</button>
+                </div>
                 <div className="col-2 d-flex flex-wrap justify-content-center">
                     <img className="w-25 m-2" src={imprimir} alt="" />
                     <button className="btn btn-success m-2" onClick={crearPago}>Imprimir Tiquete</button>
